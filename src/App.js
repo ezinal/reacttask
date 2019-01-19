@@ -1,27 +1,37 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+const https = require('https');
 
 class App extends Component {
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+      let cities = '';
+      https.get('https://jsonplaceholder.typicode.com/users', (resp) => {
+          let data = '';
+
+          // A chunk of data has been received.
+          resp.on('data', (chunk) => {
+              data += chunk;
+          });
+
+          // The whole response has been received. Print out the result.
+          resp.on('end', () => {
+              for (let i = 0; i < JSON.parse(data).length; i++)
+                  cities += JSON.parse(data)[i].address.city + '\n';
+              console.log(cities);
+          });
+
+      });
+      let printing = "All users data:";
+      return <div className="App">
+          <header className="App-header">
+              <p>
+                  {printing}
+              </p>
+              <p>
+                  {cities}
+              </p>
+          </header>
+      </div>;
   }
 }
 
