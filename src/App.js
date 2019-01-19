@@ -3,33 +3,37 @@ import './App.css';
 const https = require('https');
 
 class App extends Component {
+    state = {cities : ""};
+    getData = () => {
+        let getCities = '';
+        https.get('https://jsonplaceholder.typicode.com/users', (resp) => {
+            let data = '';
+
+            // A chunk of data has been received.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                for (let i = 0; i < JSON.parse(data).length; i++)
+                    getCities += JSON.parse(data)[i].address.city + '\n';
+                console.log(getCities);
+            });
+        });
+        this.setState({cities : this.state.cities + getCities});
+    };
   render() {
-      let cities = '';
-      https.get('https://jsonplaceholder.typicode.com/users', (resp) => {
-          let data = '';
-
-          // A chunk of data has been received.
-          resp.on('data', (chunk) => {
-              data += chunk;
-          });
-
-          // The whole response has been received. Print out the result.
-          resp.on('end', () => {
-              for (let i = 0; i < JSON.parse(data).length; i++)
-                  cities += JSON.parse(data)[i].address.city + '\n';
-              console.log(cities);
-          });
-
-      });
-      let printing = "All users data:";
+      let test = "All users data:";
       return <div className="App">
           <header className="App-header">
               <p>
-                  {printing}
+                  {test}
               </p>
-              <p>
-                  {cities}
-              </p>
+              <div>
+                  <button onClick={this.getData}>Print Users</button>
+                  {this.state.cities}
+              </div>
           </header>
       </div>;
   }
