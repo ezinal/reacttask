@@ -21,7 +21,7 @@ class App extends Component {
                 console.log(getCities);
             });
         });
-        this.setState({cities : this.state.cities + getCities});
+        this.setState({cities : getCities});
     };
   render() {
       let test = "All users data:";
@@ -31,8 +31,10 @@ class App extends Component {
                   {test}
               </p>
               <div>
-                  <button onClick={this.getData}>Print Users</button>
                   {this.state.cities}
+              </div>
+              <div>
+                  <button onClick={this.getData()}>Print Users</button>
               </div>
           </header>
       </div>;
