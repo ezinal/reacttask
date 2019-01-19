@@ -23,22 +23,22 @@ class App extends Component {
         });
         this.setState({cities : getCities});
     };
-  render() {
-      let test = "All users data:";
-      return <div className="App">
-          <header className="App-header">
-              <p>
-                  {test}
-              </p>
-              <div>
-                  {this.state.cities}
-              </div>
-              <div>
-                  <button onClick={this.getData()}>Print Users</button>
-              </div>
-          </header>
-      </div>;
-  }
+    render() {
+        let test = "All users data:";
+        return <div className="App">
+            <header className="App-header">
+                <p>
+                    {test}
+                </p>
+                <div>
+                    {this.state.cities}
+                </div>
+                <div>
+                    <button onClick={this.getData}>Print Users</button>
+                </div>
+            </header>
+        </div>;
+    }
 }
 
 export default App;
